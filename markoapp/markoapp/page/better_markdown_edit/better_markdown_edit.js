@@ -1,17 +1,10 @@
 frappe.pages['better-markdown-edit'].on_page_load = function(wrapper) {
 
-
-	// console.log(wrapper);
-
 	let page = frappe.ui.make_app_page({
 		parent: wrapper,
 		title: 'Markdown Editor ',
 		single_column: true
 	});
-
-	page.set_title('Very Cool Markdown Editor');
-
-	console.log(page);
 
 	// Add Priamry Button
 	page.set_primary_action('Save', function() {
@@ -26,22 +19,25 @@ frappe.pages['better-markdown-edit'].on_page_load = function(wrapper) {
 		options: 'DocType',
 		change() {
 			const docType = docType_field.get_value();
-			console.log(docType);
+			console.log('Selected DocType:', docType);
+
+			// Remove existing document field if it exists
+            if (window.document_field) {
+				console.log('Removing Existing Document Field if exist')
+                window.document_field.remove();
+            }
 
 			let document_field = page.add_field({
-			label: 'Document',
-			fieldtype: 'Link',
-			fieldname: 'document',
-			options: docType,
-			change() {
-				console.log(field.get_value());
-			}
+				label: 'Document',
+				fieldtype: 'Link',
+				fieldname: 'document',
+				options: docType,
+				change() {
+					console.log(document_field.get_value());
+					}
 			})
 		}
 	});
 
-	
-	
-	
-	
 }
+
